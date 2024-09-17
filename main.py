@@ -86,9 +86,9 @@ def vivacheck():
                     "subscriptionStatus": sess.json().get('subscriptionStatus'),
                     "subscriptionLocation": sess.json().get('subscriptionLocation'),
                     "subscriptionId": sess.json().get('subscriptionId'),
-                    "subscriptionExpiryTime": pytz.timezone("Asia/Manila").localize(datetime.fromtimestamp(sess.json().get('subscriptionExpiryTime') / 1000)).strftime("%Y-%m-%d %H:%M:%S"),
-                    "parentalControlPin": sess.json().get('parentalControlPin'),
-                    "nextAvailableDownload": sess.json().get('nextAvailableDownload')
+                    #"subscriptionExpiryTime": pytz.timezone("Asia/Manila").localize(datetime.fromtimestamp(sess.json().get('subscriptionExpiryTime') / 1000)).strftime("%Y-%m-%d %H:%M:%S"),
+                    "parentalControlPin": sess.json().get('parentalControlPin')
+                    #"nextAvailableDownload": sess.json().get('nextAvailableDownload')
                 })
 
             elif sess.json().get('subscription') and sess.json().get('subscription').get('status'):
@@ -98,8 +98,8 @@ def vivacheck():
                     "subscriptionLocation": sess.json().get('subscription', {}).get('location') or sess.json().get('registerLocation'),
                     # "subscriptionId": sess.json().get('subscription')['id'],
                     # "subscriptionExpiryTime": pytz.timezone("Asia/Manila").localize(datetime.fromtimestamp(sess.json().get('subscription')['expiryTime'] / 1000)).strftime("%Y-%m-%d %H:%M:%S"),
-                    "parentalControlPin": sess.json().get('parentalControlPin'),
-                    "nextAvailableDownload": sess.json().get('nextAvailableDownload')
+                    "parentalControlPin": sess.json().get('parentalControlPin')
+                    #"nextAvailableDownload": sess.json().get('nextAvailableDownload')
                 })
             else:
                 return jsonify({"message": "else"}, sess.json())
@@ -109,8 +109,8 @@ def vivacheck():
                 "subscriptionLocation": login3_response.get('subscriptionLocation'),
                 "subscriptionId": login3_response.get('subscriptionId'),
                 # "subscriptionExpiryTime": pytz.timezone("Asia/Manila").localize(datetime.fromtimestamp(login3_response.get('subscriptionExpiryTime') / 1000)).strftime("%Y-%m-%d %H:%M:%S"),
-                "parentalControlPin": login3_response.get('parentalControlPin'),
-                "nextAvailableDownload": login3_response.get('nextAvailableDownload')
+                "parentalControlPin": login3_response.get('parentalControlPin')
+                #"nextAvailableDownload": login3_response.get('nextAvailableDownload')
             })
     except requests.RequestException as e:
         return jsonify({"Error": "Wrong Email Or Passwordzzz"}), 500
