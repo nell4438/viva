@@ -40,7 +40,7 @@ def vivacheck():
 
     try:
         response = requests.post(
-            "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={key}",
+            f"https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={key}",
             json=viva_payload,
             headers=headers
         )
