@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 import json
 from datetime import datetime
@@ -7,6 +8,7 @@ from fake_useragent import UserAgent
 # from telegram import Bot
 # from aiogram import Bot
 app = Flask(__name__)
+CORS(app)
 
 def send_telegram_message(message):
     try:
