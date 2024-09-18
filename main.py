@@ -26,12 +26,12 @@ def vivacheck():
     random_user_agent = ua.random
     creds = request.args.get('creds')
     if not creds:
-        return jsonify({"error": "No credentials provided"}), 400
+        return jsonify({"error": "No credentials provided"}), 200
 
     try:
         email, password = creds.split(':')
     except ValueError:
-        return jsonify({"error": "Invalid credentials format"}), 400
+        return jsonify({"error": "Invalid credentials format"}), 200
 
     viva_payload = {
         "email": email,
@@ -61,7 +61,7 @@ def vivacheck():
         if login1_response.get("error", {}).get("code") == 400:
             return jsonify({'Error': 'Wrong Email or Password'})
         if 'idToken' not in login1_response:
-            return jsonify({"error": "Invalid login1_response"}), 400
+            return jsonify({"error": "Invalid login1_response"}), 200
 
         # First POST request to login
         login3 = requests.post(
