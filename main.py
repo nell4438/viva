@@ -141,7 +141,7 @@ def vivacheck():
                 #"nextAvailableDownload": login3_response.get('nextAvailableDownload')
             })
     except requests.RequestException as e:
-        return jsonify({"Error": "Wrong Email Or Passwordzzz"}), 500
+        return jsonify({"Error": "Wrong Email Or Passwordzzz"}), 200
 
 
 if __name__ == '__main__':
